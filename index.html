@@ -531,20 +531,20 @@ dialog button:hover{border-color:var(--c1)}
   <section id="grado">
     <div class="sec-head">
       <div><span class="label">02 — Proyecto de grado</span><h2>Ingeniería Informática · UCASAL</h2></div>
-      <p>El proyecto final con el que cerré la carrera: series temporales, modelos predictivos y una app web que los pone en producción.</p>
+      <p>Mi tesis de Ingeniería en Informática: econometría de series temporales aplicada al tipo de cambio, y una app web que pone los pronósticos en producción.</p>
     </div>
 
     <article class="thesis reveal">
       <div class="thesis-head">
         <div>
-          <div class="top"><span class="badge live">Online</span><span class="badge">Proyecto de grado · 2025</span></div>
-          <h3>FORECASTING <span class="grad">— Pronóstico del dólar argentino</span></h3>
-          <p class="role">Ciencia de datos aplicada · Investigación, modelado y desarrollo web</p>
+          <div class="top"><span class="badge live">Online</span><span class="badge">Proyecto de grado · 2025</span><span class="badge">UCASAL</span></div>
+          <h3>Series temporales aplicadas al pronóstico <span class="grad">de tendencias USD/ARS</span></h3>
+          <p class="role">Metodología CRISP-DM · Modelado econométrico · App web FORECASTING</p>
         </div>
         <div class="thesis-kpis">
           <div><b>2016–2025</b><small>serie mensual</small></div>
-          <div><b>10</b><small>series monetarias y cambiarias</small></div>
-          <div><b>5 meses</b><small>de horizonte de pronóstico</small></div>
+          <div><b>8</b><small>modelos estimados y comparados</small></div>
+          <div><b>13 %</b><small>MAPE del modelo del dólar blue</small></div>
         </div>
       </div>
 
@@ -564,11 +564,12 @@ dialog button:hover{border-color:var(--c1)}
       <div class="thesis-body">
         <div>
           <ul>
-            <li>Construí un dataset propio de 2016 a 2025 con cotizaciones del dólar oficial y blue, inflación, base monetaria, circulante, depósitos y tasas (LELIQ, LEBAC). Es público en GitHub.</li>
-            <li>Entrené modelos de series temporales que pronostican mes a mes el dólar oficial y el blue; las predicciones se publican como CSV versionado.</li>
-            <li>Desarrollé la app web: cotizaciones en vivo desde DolarAPI (actualización por minuto), gráficos interactivos de real vs. pronóstico y tarjetas con la variación mensual proyectada.</li>
+            <li><strong>Datos:</strong> dataset propio con series del BCRA y el INDEC (dólar oficial, blue y CCL, base monetaria, reservas, tasa de plazo fijo e inflación), con análisis de estacionariedad, estacionalidad, ACF y PACF. Es público en GitHub.</li>
+            <li><strong>Modelado:</strong> estimé y comparé ARMAX, ARIMAX, SARMAX y SARIMAX para cada serie, con selección de variables por causalidad de Granger y VIF, y pronóstico de las exógenas con VAR.</li>
+            <li><strong>Evaluación:</strong> AIC, BIC, HQIC, significancia de parámetros, diagnóstico de residuos (Ljung-Box, Jarque-Bera, Durbin-Watson) y error fuera de muestra (MAE, RMSE, MAPE). Seleccioné ARIMAX para el dólar oficial y ARMAX para el blue.</li>
+            <li><strong>Producto:</strong> app web con cotizaciones en vivo desde DolarAPI, gráficos de real vs. pronóstico y proyección de los próximos 5 meses.</li>
           </ul>
-          <div class="chips"><span>Series temporales</span><span>Modelos predictivos</span><span>Next.js</span><span>TypeScript</span><span>Recharts</span><span>shadcn/ui</span><span>DolarAPI</span><span>Vercel</span></div>
+          <div class="chips"><span>Python</span><span>statsmodels</span><span>ARIMAX</span><span>VAR</span><span>CRISP-DM</span><span>Next.js</span><span>TypeScript</span><span>Recharts</span><span>DolarAPI</span></div>
           <div class="plinks"><a href="https://forecast-ten-gamma.vercel.app" target="_blank" rel="noopener">Ver app ↗</a><a href="https://github.com/ayrtondiaz/dataset_ar" target="_blank" rel="noopener">Dataset ↗</a></div>
         </div>
         <div class="thesis-shots">
