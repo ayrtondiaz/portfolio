@@ -1,0 +1,831 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#05070d">
+<title>Ayrton Diaz — Ingeniero Informático · Desarrollador Fullstack</title>
+<meta name="description" content="Portfolio de Ayrton Diaz, Ingeniero Informático y desarrollador fullstack en Salta, Argentina. Next.js, NestJS, PostgreSQL, Odoo y desarrollo asistido por IA.">
+<meta property="og:title" content="Ayrton Diaz — Desarrollador Fullstack">
+<meta property="og:description" content="Next.js · NestJS · PostgreSQL · Odoo · Desarrollo asistido por IA">
+<meta property="og:image" content="assets/img/nexus-home.webp">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%23071a2f'/><text x='16' y='21' font-family='monospace' font-size='14' font-weight='700' fill='%234da3ff' text-anchor='middle'>AD</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#05070d; --bg2:#080c16; --surface:#0b1120; --surface2:#0f172a; --text:#e6edf7; --muted:#8b97ad; --line:#1a2338;
+  --c1:#22d3ee; --c2:#34d399; --c3:#818cf8; --accent:#22d3ee;
+  --grad:linear-gradient(90deg,var(--c1),var(--c2));
+  --shadow:0 10px 40px rgba(0,0,0,.45);
+  --ok:#34d399;
+  color-scheme:dark;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:72px}
+body{background:var(--bg);color:var(--text);font:16px/1.65 Inter,system-ui,sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+::selection{background:var(--c1);color:#001018}
+img{display:block;max-width:100%}
+a{color:inherit}
+.wrap{max-width:1120px;margin:0 auto;padding:0 24px;position:relative;z-index:2}
+.label{font:500 12px/1.4 "JetBrains Mono",monospace;letter-spacing:.08em;text-transform:uppercase;color:var(--c1)}
+strong{color:var(--text);font-weight:600}
+
+/* background layers */
+#net{position:absolute;top:0;left:0;width:100%;height:100vh;z-index:0;pointer-events:none;
+  -webkit-mask-image:linear-gradient(#000 55%,transparent);mask-image:linear-gradient(#000 55%,transparent)}
+.gridbg{position:absolute;inset:0 0 auto 0;height:120vh;z-index:0;pointer-events:none;
+  background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);
+  background-size:56px 56px;opacity:.35;
+  -webkit-mask-image:radial-gradient(ellipse 70% 60% at 50% 0%,#000,transparent 75%);mask-image:radial-gradient(ellipse 70% 60% at 50% 0%,#000,transparent 75%)}
+#glow{position:fixed;width:520px;height:520px;border-radius:50%;pointer-events:none;z-index:1;left:0;top:0;
+  background:radial-gradient(circle,rgba(34,211,238,.10),transparent 60%);transform:translate(-50%,-50%);transition:opacity .3s;opacity:0}
+#progress{position:fixed;top:0;left:0;height:2px;width:100%;z-index:50;background:var(--grad);transform-origin:0 50%;transform:scaleX(0)}
+
+/* nav */
+header{position:sticky;top:0;z-index:20;background:rgba(5,7,13,.72);backdrop-filter:blur(14px) saturate(140%);border-bottom:1px solid var(--line)}
+nav{display:flex;align-items:center;justify-content:space-between;height:62px;gap:16px}
+.brand{font:700 16px "JetBrains Mono",monospace;text-decoration:none;letter-spacing:-.01em}
+.brand span{color:var(--c1);animation:blink 1.2s steps(1) infinite}
+.links{display:flex;gap:26px;align-items:center}
+.links a{text-decoration:none;color:var(--muted);font-size:14px;font-weight:500;position:relative;transition:color .2s}
+.links a:not(.btn-nav)::after{content:"";position:absolute;left:0;bottom:-6px;height:1px;width:100%;background:var(--grad);transform:scaleX(0);transform-origin:left;transition:transform .3s}
+.links a:hover{color:var(--text)}
+.links a:hover::after,.links a.active::after{transform:scaleX(1)}
+.links a.active{color:var(--text)}
+.btn-nav{padding:7px 14px;border:1px solid var(--line);border-radius:8px;color:var(--text)!important}
+.btn-nav:hover{border-color:var(--c1);box-shadow:0 0 18px rgba(34,211,238,.25)}
+@media (max-width:720px){.links a:not(.keep){display:none}}
+
+/* hero */
+.hero{padding:104px 0 80px;display:grid;grid-template-columns:1fr auto;gap:56px;align-items:center;min-height:calc(100vh - 62px - 120px)}
+.hero-label{display:inline-flex;align-items:center;gap:8px;padding:7px 12px;border:1px solid var(--line);border-radius:999px;background:rgba(11,17,32,.6);text-transform:none;letter-spacing:.02em;font-size:13px}
+.hero-label .prompt{color:var(--muted)}
+#role{color:var(--c2)}
+.caret{display:inline-block;width:8px;height:15px;background:var(--c1);animation:blink 1s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+.hero h1{font-size:clamp(38px,6.2vw,66px);line-height:1.04;letter-spacing:-.04em;font-weight:700;margin:22px 0 20px}
+.grad{background:linear-gradient(90deg,var(--c1),var(--c2),var(--c3),var(--c1));background-size:300% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:shift 8s linear infinite}
+@keyframes shift{to{background-position:300% 0}}
+.hero p.lead{font-size:18px;color:var(--muted);max-width:640px}
+.meta{display:flex;flex-wrap:wrap;gap:10px 22px;margin:24px 0 32px;font-size:14px;color:var(--muted)}
+.meta span::before{content:"";display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--ok);margin-right:9px;vertical-align:middle;box-shadow:0 0 0 0 rgba(52,211,153,.6);animation:pulse 2s infinite}
+.meta span.plain::before{background:var(--muted);animation:none;box-shadow:none}
+@keyframes pulse{70%{box-shadow:0 0 0 8px rgba(52,211,153,0)}100%{box-shadow:0 0 0 0 rgba(52,211,153,0)}}
+.cta{display:flex;flex-wrap:wrap;gap:10px}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:11px 18px;border-radius:10px;font-size:14px;font-weight:600;text-decoration:none;border:1px solid var(--line);background:rgba(11,17,32,.7);transition:transform .2s,border-color .2s,box-shadow .2s;position:relative}
+.btn:hover{transform:translateY(-2px);border-color:var(--c1);box-shadow:0 8px 24px rgba(34,211,238,.15)}
+.btn.primary{background:var(--grad);color:#001018;border-color:transparent;box-shadow:0 0 0 rgba(34,211,238,0)}
+.btn.primary:hover{box-shadow:0 10px 34px rgba(34,211,238,.35)}
+.avatar-wrap{position:relative;width:236px;height:236px;display:grid;place-items:center}
+.avatar-wrap::before{content:"";position:absolute;inset:0;border-radius:28px;padding:2px;background:conic-gradient(from var(--a,0deg),var(--c1),transparent 30%,var(--c2),transparent 70%,var(--c1));
+  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;animation:spin 6s linear infinite}
+.avatar-wrap::after{content:"";position:absolute;inset:-30px;border-radius:50%;background:radial-gradient(circle,rgba(34,211,238,.18),transparent 65%);z-index:-1;filter:blur(10px)}
+@property --a{syntax:"<angle>";inherits:false;initial-value:0deg}
+@keyframes spin{to{--a:360deg}}
+.avatar{width:220px;height:220px;border-radius:24px;object-fit:cover}
+@media (max-width:820px){.hero{grid-template-columns:1fr;padding-top:48px;min-height:0}.avatar-wrap{order:-1;width:128px;height:128px}.avatar-wrap::before{border-radius:22px}.avatar{width:118px;height:118px;border-radius:18px}}
+
+/* stats */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--line);border-radius:16px;background:rgba(11,17,32,.55);backdrop-filter:blur(6px)}
+.stats div{padding:22px 24px;border-right:1px solid var(--line)}
+.stats div:last-child{border-right:none}
+.stats b{display:block;font-size:28px;letter-spacing:-.02em;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;font-variant-numeric:tabular-nums}
+.stats small{color:var(--muted);font-size:13px}
+@media (max-width:720px){.stats{grid-template-columns:repeat(2,1fr)}.stats div:nth-child(2){border-right:none}.stats div:nth-child(-n+2){border-bottom:1px solid var(--line)}}
+
+/* marquee */
+.marquee{margin-top:40px;overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,#000 10%,#000 90%,transparent);mask-image:linear-gradient(90deg,transparent,#000 10%,#000 90%,transparent)}
+.track{display:flex;gap:14px;width:max-content;animation:scroll 40s linear infinite}
+.marquee:hover .track{animation-play-state:paused}
+@keyframes scroll{to{transform:translateX(-50%)}}
+.tech{display:inline-flex;align-items:center;gap:10px;padding:10px 16px;border:1px solid var(--line);border-radius:12px;background:var(--surface);font:500 13px "JetBrains Mono",monospace;color:var(--muted);white-space:nowrap;transition:color .2s,border-color .2s}
+.tech:hover{color:var(--text);border-color:var(--c1)}
+.tech img{width:20px;height:20px}
+.tech img.inv{filter:invert(1)}
+
+section{padding:120px 0 0}
+.sec-head{display:flex;justify-content:space-between;align-items:end;gap:24px;margin-bottom:44px}
+.sec-head h2{font-size:clamp(28px,4vw,38px);letter-spacing:-.03em;margin-top:10px;font-family:Inter,sans-serif}
+.sec-head p{color:var(--muted);max-width:420px;font-size:15px}
+@media (max-width:720px){.sec-head{flex-direction:column;align-items:start}}
+
+/* featured projects */
+.project{display:grid;grid-template-columns:1.35fr 1fr;gap:56px;align-items:center;padding:56px 0;border-top:1px solid var(--line)}
+.project:nth-of-type(even) .shots{order:2}
+@media (max-width:900px){.project{grid-template-columns:1fr;gap:28px}.project:nth-of-type(even) .shots{order:0}}
+.shots{position:relative;perspective:1200px}
+.frame{background:var(--surface);border:1px solid var(--line);border-radius:14px;overflow:hidden;box-shadow:var(--shadow);cursor:zoom-in;transition:transform .25s ease-out,border-color .3s,box-shadow .3s;transform-style:preserve-3d;position:relative}
+.frame:hover{border-color:rgba(34,211,238,.5);box-shadow:0 20px 60px rgba(34,211,238,.12),var(--shadow)}
+.frame::after{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(500px circle at var(--mx,50%) var(--my,50%),rgba(255,255,255,.08),transparent 40%);opacity:0;transition:opacity .3s}
+.frame:hover::after{opacity:1}
+.frame .bar{display:flex;align-items:center;gap:6px;height:30px;padding:0 12px;border-bottom:1px solid var(--line);background:var(--bg2)}
+.frame .bar i{width:9px;height:9px;border-radius:50%;background:#263048}
+.frame .bar i:nth-child(1){background:#f87171}.frame .bar i:nth-child(2){background:#fbbf24}.frame .bar i:nth-child(3){background:#34d399}
+.frame .bar small{margin-left:10px;font:12px "JetBrains Mono",monospace;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.frame img{width:100%;aspect-ratio:16/10;object-fit:cover;object-position:top}
+.phone{position:absolute;right:-14px;bottom:-24px;width:24%;border-radius:18px;border:5px solid #1c2438;overflow:hidden;box-shadow:var(--shadow);background:var(--surface);cursor:zoom-in;animation:float 6s ease-in-out infinite}
+@keyframes float{50%{transform:translateY(-10px)}}
+.phone img{aspect-ratio:9/19;object-fit:cover;object-position:top;width:100%}
+@media (max-width:600px){.phone{right:-6px;width:28%;border-width:4px}}
+.thumbs{display:flex;gap:8px;margin-top:14px}
+.thumbs button{flex:0 0 64px;height:44px;border-radius:8px;overflow:hidden;border:1px solid var(--line);padding:0;cursor:zoom-in;background:none;transition:border-color .2s,transform .2s}
+.thumbs button:hover{border-color:var(--c1);transform:translateY(-2px)}
+.thumbs img{width:100%;height:100%;object-fit:cover;object-position:top}
+.info .top{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:12px}
+.badge{font:500 11px/1 "JetBrains Mono",monospace;padding:6px 8px;border-radius:6px;background:var(--surface2);border:1px solid var(--line);color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+.badge.live{background:rgba(52,211,153,.08);border-color:rgba(52,211,153,.3);color:var(--ok)}
+.badge.live::before{content:"● ";animation:blink 1.6s steps(1) infinite}
+.info h3{font-size:28px;letter-spacing:-.025em;line-height:1.2;margin-bottom:6px}
+.info .role{color:var(--muted);font-size:14px;margin-bottom:16px}
+.info ul{list-style:none;margin:16px 0 20px;display:grid;gap:9px}
+.info li{position:relative;padding-left:20px;font-size:15px;color:#c8d2e3}
+.info li::before{content:"▹";position:absolute;left:0;color:var(--c1)}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:22px}
+.chips span{font:12px "JetBrains Mono",monospace;padding:5px 9px;border-radius:6px;border:1px solid var(--line);color:var(--muted);background:rgba(11,17,32,.6);transition:color .2s,border-color .2s}
+.chips span:hover{color:var(--c1);border-color:rgba(34,211,238,.5)}
+.plinks{display:flex;gap:18px;flex-wrap:wrap}
+.plinks a{font-size:14px;font-weight:600;color:var(--c1);text-decoration:none;position:relative}
+.plinks a::after{content:"";position:absolute;left:0;bottom:-3px;height:1px;width:100%;background:var(--grad);transform:scaleX(0);transform-origin:left;transition:transform .3s}
+.plinks a:hover::after{transform:scaleX(1)}
+
+/* terminal */
+.term{background:#03060c;color:#cbd5e1;border-radius:14px;border:1px solid var(--line);box-shadow:var(--shadow),0 0 60px rgba(52,211,153,.06);font:13px/1.75 "JetBrains Mono",monospace;overflow:hidden}
+.term pre{padding:18px 20px;white-space:pre-wrap;word-break:break-word;min-height:260px}
+.term .c{color:#64748b}.term .g{color:#4ade80}.term .b{color:#60a5fa}.term .y{color:#facc15}
+.term pre.typing::after{content:"";display:inline-block;width:8px;height:14px;background:#4ade80;vertical-align:middle;animation:blink 1s steps(1) infinite}
+
+/* cards with spotlight */
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:24px}
+@media (max-width:720px){.grid{grid-template-columns:1fr}}
+.card,.spot{position:relative}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:16px;overflow:hidden;display:flex;flex-direction:column;transition:border-color .3s,transform .3s}
+.card:hover{transform:translateY(-4px);border-color:rgba(34,211,238,.35)}
+.card::before{content:"";position:absolute;inset:0;pointer-events:none;z-index:1;background:radial-gradient(420px circle at var(--mx,50%) var(--my,50%),rgba(34,211,238,.10),transparent 45%);opacity:0;transition:opacity .3s}
+.card:hover::before{opacity:1}
+.card .img{aspect-ratio:16/9;overflow:hidden;cursor:zoom-in;border-bottom:1px solid var(--line)}
+.card .img img{width:100%;height:100%;object-fit:cover;object-position:top;transition:transform .6s}
+.card:hover .img img{transform:scale(1.04)}
+.card .body{padding:22px;display:flex;flex-direction:column;gap:10px;flex:1}
+.card .top{display:flex;gap:8px;flex-wrap:wrap}
+.card h4{font-size:18px;letter-spacing:-.01em}
+.card p{color:var(--muted);font-size:14px}
+.card .chips{margin:4px 0 0}
+.card .plinks{margin-top:auto}
+.card.textonly .img{display:grid;place-items:center;cursor:default;background:
+  linear-gradient(var(--line) 1px,transparent 1px) 0 0/28px 28px,linear-gradient(90deg,var(--line) 1px,transparent 1px) 0 0/28px 28px,var(--bg2)}
+.card.textonly .img span{font:600 16px "JetBrains Mono",monospace;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+
+/* design bento */
+.bento{display:grid;grid-template-columns:repeat(4,1fr);grid-auto-rows:220px;gap:14px}
+.bento figure{position:relative;border-radius:14px;overflow:hidden;border:1px solid var(--line);background:#fff;cursor:zoom-in;transition:border-color .3s,transform .3s}
+.bento figure:hover{border-color:var(--c1);transform:translateY(-3px)}
+.bento figure img{width:100%;height:100%;object-fit:cover;transition:transform .6s,filter .4s;filter:saturate(.85)}
+.bento figure.contain img{object-fit:contain;padding:18px}
+.bento figure:hover img{transform:scale(1.05);filter:saturate(1.05)}
+.bento figcaption{position:absolute;left:10px;bottom:10px;font:500 11px "JetBrains Mono",monospace;padding:5px 8px;border-radius:6px;background:rgba(3,6,12,.82);color:#e6edf7;letter-spacing:.04em;border:1px solid rgba(255,255,255,.08)}
+.bento .w2{grid-column:span 2}.bento .h2{grid-row:span 2}
+@media (max-width:820px){.bento{grid-template-columns:repeat(2,1fr);grid-auto-rows:170px}}
+
+/* experience timeline */
+.xp{position:relative;padding-left:0}
+.xp-item{display:grid;grid-template-columns:180px 1fr;gap:28px;padding:26px 0;border-top:1px solid var(--line);position:relative}
+.xp-item time{font:13px "JetBrains Mono",monospace;color:var(--c1);padding-top:4px}
+.xp-item h4{font-size:17px}
+.xp-item h4 small{font-weight:500;color:var(--muted)}
+.xp-item p{color:var(--muted);font-size:15px;margin-top:6px;max-width:720px}
+.xp-item:hover h4{color:var(--c1)}
+@media (max-width:640px){.xp-item{grid-template-columns:1fr;gap:6px}}
+
+/* skills / edu */
+.cols{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+@media (max-width:820px){.cols{grid-template-columns:1fr}}
+.cols>div{padding:22px;border:1px solid var(--line);border-radius:14px;background:var(--surface);transition:border-color .3s}
+.cols>div:hover{border-color:rgba(34,211,238,.35)}
+.cols h5{font:500 12px "JetBrains Mono",monospace;text-transform:uppercase;letter-spacing:.08em;color:var(--c1);margin-bottom:14px}
+.cols .chips{margin:0}
+.cols .chips span{font-size:13px;color:var(--text)}
+.edu{display:grid;grid-template-columns:1fr 1fr;gap:48px}
+@media (max-width:820px){.edu{grid-template-columns:1fr}}
+.edu ul{list-style:none}
+.edu li{padding:14px 0;border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:16px;font-size:15px}
+.edu li span{color:var(--muted);font:13px "JetBrains Mono",monospace;white-space:nowrap}
+blockquote{margin-top:48px;padding:30px 34px;border:1px solid var(--line);border-left:3px solid var(--c1);background:linear-gradient(90deg,rgba(34,211,238,.06),transparent 60%),var(--surface);border-radius:0 14px 14px 0;font-size:18px;line-height:1.6}
+blockquote cite{display:block;margin-top:12px;font-size:14px;color:var(--muted);font-style:normal}
+
+/* contact */
+.contact{margin:120px 0 0;padding:88px 24px;border:1px solid var(--line);border-radius:24px;text-align:center;position:relative;overflow:hidden;
+  background:radial-gradient(600px circle at 50% 120%,rgba(34,211,238,.16),transparent 60%),var(--surface)}
+.contact h2{font-size:clamp(32px,5vw,52px);letter-spacing:-.035em;margin:12px 0 14px}
+.contact p{color:var(--muted);max-width:520px;margin:0 auto 28px}
+.contact .cta{justify-content:center}
+footer{padding:36px 0 44px;color:var(--muted);font:13px "JetBrains Mono",monospace;text-align:center}
+
+/* lightbox */
+dialog{border:none;background:transparent;max-width:min(1200px,94vw);max-height:92vh;margin:auto;padding:0}
+dialog[open]{animation:pop .25s ease-out}
+@keyframes pop{from{opacity:0;transform:scale(.96)}}
+dialog::backdrop{background:rgba(2,4,8,.9);backdrop-filter:blur(4px)}
+dialog img{max-width:100%;max-height:86vh;border-radius:10px;margin:auto}
+dialog .lb-bar{display:flex;justify-content:space-between;align-items:center;color:#cbd5e1;font:13px "JetBrains Mono",monospace;margin-top:10px;gap:12px}
+dialog button{background:#111a2e;color:#e2e8f0;border:1px solid var(--line);border-radius:8px;padding:8px 12px;cursor:pointer;font:inherit}
+dialog button:hover{border-color:var(--c1)}
+
+/* reveal */
+.reveal{opacity:0;transform:translateY(28px);filter:blur(4px);transition:opacity .8s cubic-bezier(.2,.7,.2,1),transform .8s cubic-bezier(.2,.7,.2,1),filter .8s}
+.reveal.in{opacity:1;transform:none;filter:none}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+  .reveal{opacity:1;transform:none;filter:none}
+  #net,#glow{display:none}
+}
+</style>
+</head>
+<body>
+<div id="progress" aria-hidden="true"></div>
+<div id="glow" aria-hidden="true"></div>
+<canvas id="net" aria-hidden="true"></canvas>
+<div class="gridbg" aria-hidden="true"></div>
+
+<header>
+  <nav class="wrap">
+    <a class="brand" href="#top">ayrton<span>.</span>diaz</a>
+    <div class="links">
+      <a href="#proyectos">Proyectos</a>
+      <a href="#diseno">Diseño</a>
+      <a href="#experiencia">Experiencia</a>
+      <a href="#stack">Stack</a>
+      <a class="keep btn-nav" href="#contacto">Contacto</a>
+    </div>
+  </nav>
+</header>
+
+<main id="top" class="wrap">
+
+  <!-- HERO -->
+  <div class="hero">
+    <div>
+      <span class="label hero-label"><span class="prompt">~/ayrton-diaz $</span> <span id="role">Desarrollador Fullstack</span><span class="caret" aria-hidden="true"></span></span>
+      <h1>Construyo software que resuelve problemas reales <span class="grad">— con IA como parte del proceso.</span></h1>
+      <p class="lead">Fundador de <strong>Stark Soft &amp; Design</strong>, mi startup de desarrollo de software. Desarrollo aplicaciones con Next.js, NestJS y PostgreSQL, sitios institucionales en Odoo y automatizaciones con Python y agentes de IA (Claude Code, MCP, Playwright). Además, enseño programación a nivel superior.</p>
+      <div class="meta">
+        <span>Disponible para nuevos proyectos</span>
+        <span class="plain">Salta, Argentina · Remoto / Híbrido</span>
+      </div>
+      <div class="cta">
+        <a class="btn primary" href="#proyectos">Ver proyectos</a>
+        <a class="btn" href="assets/CV_Ayrton_Diaz.pdf" download>Descargar CV</a>
+        <a class="btn" href="https://www.linkedin.com/in/ayrton-diaz-1437b329b" target="_blank" rel="noopener">LinkedIn ↗</a>
+        <a class="btn" href="https://github.com/ayrtondiaz" target="_blank" rel="noopener">GitHub ↗</a>
+      </div>
+    </div>
+    <div class="avatar-wrap">
+      <picture>
+        <source srcset="assets/img/profile.webp" type="image/webp">
+        <img class="avatar" src="assets/img/profile.jpg" alt="Retrato de Ayrton Diaz" width="220" height="220">
+      </picture>
+    </div>
+  </div>
+
+  <div class="stats">
+    <div><b>20+</b><small>sitios y tiendas entregados</small></div>
+    <div><b>5</b><small>proyectos online</small></div>
+    <div><b>2025</b><small>Ingeniería Informática, UCASAL</small></div>
+    <div><b>IES 6001</b><small>Docente de Programación II</small></div>
+  </div>
+
+  <div class="marquee" aria-label="Tecnologías que uso">
+    <div class="track" id="track"></div>
+  </div>
+
+  <!-- PROYECTOS DESTACADOS -->
+  <section id="proyectos">
+    <div class="sec-head">
+      <div><span class="label">01 — Trabajo seleccionado</span><h2>Proyectos destacados</h2></div>
+      <p>Capturas reales tomadas de los sitios en producción y de los entornos de desarrollo. Clic en cualquier imagen para ampliarla.</p>
+    </div>
+
+    <!-- Stark -->
+    <article class="project reveal">
+      <div class="shots">
+        <div class="frame" data-gallery="stark" data-i="0" style="background:#0b0f14;border-color:#1e293b">
+          <div class="bar" style="border-color:#1e293b"><i></i><i></i><i></i><small>stark — soft &amp; design</small></div>
+          <img src="assets/img/stark-logo.webp" alt="Logo de Stark Soft &amp; Design" loading="lazy" style="object-fit:contain;object-position:center;padding:36px">
+        </div>
+        <div class="thumbs">
+          <button data-gallery="stark" data-i="1"><img src="assets/img/nexus-home.webp" alt="Nexus Importados — cliente de Stark en producción" loading="lazy"></button>
+          <button data-gallery="stark" data-i="2"><img src="assets/img/brand-adl-concepts.webp" alt="Conceptos de marca y paletas desarrollados por Stark" loading="lazy"></button>
+          <button data-gallery="stark" data-i="3"><img src="assets/img/brand-maverik.webp" alt="Propuesta de marca MAVERIK Importaciones" loading="lazy"></button>
+        </div>
+      </div>
+      <div class="info">
+        <div class="top"><span class="badge live">Mi startup</span><span class="badge">2024 — Actual · Fundador</span></div>
+        <h3>Stark Soft &amp; Design</h3>
+        <p class="role">Startup de desarrollo de software · Fundador y arquitecto de software</p>
+        <ul>
+          <li>Desarrollo de productos y soluciones a medida: software, e-commerce, branding y diseño.</li>
+          <li><strong>Stark IA</strong>, producto insignia: plataforma de e-commerce con ERP propio, diseñada a partir del análisis técnico de Contabilium, Tiendanube y Empretienda.</li>
+          <li>Primer cliente en producción: Nexus Importados, con tienda, panel de administración y sistema de marca completos.</li>
+        </ul>
+        <div class="chips"><span>Next.js</span><span>NestJS</span><span>PostgreSQL</span><span>Docker</span><span>ERP</span><span>IA</span><span>Branding</span></div>
+        <div class="plinks"><a href="https://nexusimportados.com.ar" target="_blank" rel="noopener">Ver cliente en producción ↗</a></div>
+      </div>
+    </article>
+
+    <!-- Nexus -->
+    <article class="project reveal">
+      <div class="shots">
+        <div class="frame" data-gallery="nexus" data-i="0">
+          <div class="bar"><i></i><i></i><i></i><small>nexusimportados.com.ar</small></div>
+          <img src="assets/img/nexus-home.webp" alt="Home de Nexus Importados" loading="lazy">
+        </div>
+        <div class="phone" data-gallery="nexus" data-i="1"><img src="assets/img/nexus-mobile.webp" alt="Nexus Importados en móvil" loading="lazy"></div>
+      </div>
+      <div class="info">
+        <div class="top"><span class="badge live">En producción</span><span class="badge">2026 · Cliente</span></div>
+        <h3>Nexus Importados</h3>
+        <p class="role">E-commerce a medida para un importador de tecnología · Desarrollado con Stark Soft &amp; Design: arquitectura, desarrollo y branding</p>
+        <ul>
+          <li>Tienda completa con catálogo alimentado por scraper, carrito y pagos con MercadoPago.</li>
+          <li>Panel de administración propio y asistencia con IA (OpenAI + Anthropic) para la gestión de productos.</li>
+          <li>Deploy en VPS con Dokploy; identidad visual, manual de marca y videos promocionales.</li>
+        </ul>
+        <div class="chips"><span>Next.js 16</span><span>React 19</span><span>NestJS</span><span>Prisma</span><span>PostgreSQL</span><span>Tailwind</span><span>MercadoPago</span></div>
+        <div class="plinks"><a href="https://nexusimportados.com.ar" target="_blank" rel="noopener">Ver sitio ↗</a></div>
+      </div>
+    </article>
+
+    <!-- CPCE -->
+    <article class="project reveal">
+      <div class="shots">
+        <div class="frame" data-gallery="cpce" data-i="0">
+          <div class="bar"><i></i><i></i><i></i><small>encuentro2026.consejosalta.org.ar</small></div>
+          <img src="assets/img/cpce-encuentro.webp" alt="Sitio del XX Encuentro Deportivo Nacional" loading="lazy">
+        </div>
+        <div class="thumbs">
+          <button data-gallery="cpce" data-i="1"><img src="assets/img/cpce-flyer.webp" alt="Rediseño de flyers: antes y después" loading="lazy"></button>
+          <button data-gallery="cpce" data-i="2"><img src="assets/img/cpce-insignias.webp" alt="Insignias de gamificación de cursos" loading="lazy"></button>
+        </div>
+      </div>
+      <div class="info">
+        <div class="top"><span class="badge live">En producción</span><span class="badge">2026 · Actual</span></div>
+        <h3>Consejo Profesional de Ciencias Económicas de Salta</h3>
+        <p class="role">Odoo Developer &amp; UX/UI Designer</p>
+        <ul>
+          <li>Migración de 21 contenidos institucionales de WordPress a Odoo 19 con plantillas QWeb.</li>
+          <li>Generadores en Python (lxml) que publican vía XML-RPC, con un validador propio previo a cada deploy.</li>
+          <li>Sitio del XX Encuentro Deportivo Nacional, rediseño de piezas gráficas e insignias de gamificación para la plataforma de cursos.</li>
+        </ul>
+        <div class="chips"><span>Odoo 19</span><span>QWeb</span><span>Python</span><span>XML-RPC</span><span>DuckDB</span><span>SEO</span></div>
+        <div class="plinks"><a href="https://encuentro2026.consejosalta.org.ar" target="_blank" rel="noopener">Ver Encuentro 2026 ↗</a></div>
+      </div>
+    </article>
+
+    <!-- RentIA -->
+    <article class="project reveal">
+      <div class="shots">
+        <div class="frame" data-gallery="rentia" data-i="0">
+          <div class="bar"><i></i><i></i><i></i><small>rentia — búsqueda con mapa</small></div>
+          <img src="assets/img/rentia-listing.webp" alt="Listado de propiedades con mapa en RentIA" loading="lazy">
+        </div>
+        <div class="phone" data-gallery="rentia" data-i="4"><img src="assets/img/rentia-mobile.webp" alt="RentIA en móvil" loading="lazy"></div>
+        <div class="thumbs">
+          <button data-gallery="rentia" data-i="1"><img src="assets/img/rentia-home.webp" alt="Home de RentIA" loading="lazy"></button>
+          <button data-gallery="rentia" data-i="2"><img src="assets/img/rentia-detail.webp" alt="Detalle de propiedad" loading="lazy"></button>
+          <button data-gallery="rentia" data-i="3"><img src="assets/img/rentia-admin.webp" alt="Panel de administración" loading="lazy"></button>
+        </div>
+      </div>
+      <div class="info">
+        <div class="top"><span class="badge">MVP · En desarrollo</span><span class="badge">2026 · Propio</span></div>
+        <h3>RentIA</h3>
+        <p class="role">Plataforma de alquileres para Salta · Producto propio, fullstack</p>
+        <ul>
+          <li>Búsqueda geoespacial con mapa, filtros y asistente de publicación en pasos.</li>
+          <li>Scraper propio en Python que alimenta el catálogo, con panel de administración y métricas.</li>
+          <li>100% self-hosted con Docker Compose y Caddy; tests unitarios y end-to-end.</li>
+        </ul>
+        <div class="chips"><span>Next.js 16</span><span>TypeScript</span><span>Drizzle</span><span>PostGIS</span><span>Better Auth</span><span>Leaflet</span><span>Playwright</span></div>
+      </div>
+    </article>
+
+    <!-- automata -->
+    <article class="project reveal">
+      <div class="shots">
+        <div class="term">
+          <div class="bar frame-bar" style="display:flex;align-items:center;gap:6px;height:30px;padding:0 12px;border-bottom:1px solid #1e293b"><i style="width:9px;height:9px;border-radius:50%;background:#334155"></i><i style="width:9px;height:9px;border-radius:50%;background:#334155"></i><i style="width:9px;height:9px;border-radius:50%;background:#334155"></i><small style="margin-left:10px;color:#64748b">automata — pipeline</small></div>
+<pre id="term"><span class="c"># búsqueda → análisis → aprobación → envío</span>
+<span class="b">$</span> automata run --profile fullstack
+<span class="g">✓</span> ofertas recolectadas con Playwright
+<span class="g">✓</span> análisis con Claude Code (headless) → JSON validado
+<span class="g">✓</span> CV + carta generados (Jinja2)
+<span class="y">→</span> postulaciones esperando aprobación en Telegram
+<span class="g">✓</span> registro sincronizado en Google Sheets
+
+<span class="b">$</span> pytest -q
+<span class="g">203 passed</span></pre>
+        </div>
+      </div>
+      <div class="info">
+        <div class="top"><span class="badge">Herramienta propia</span><span class="badge">2026 · IA</span></div>
+        <h3>automata</h3>
+        <p class="role">Agente de búsqueda y postulación laboral con IA · Python</p>
+        <ul>
+          <li>Automatiza navegadores con Playwright sobre un perfil real de Chrome.</li>
+          <li>Usa Claude Code en modo headless para analizar ofertas; las salidas del modelo se validan con JSON Schema.</li>
+          <li>Integra Google Sheets, Microsoft Graph y Telegram, donde se aprueba cada envío. 94 módulos y 203 tests.</li>
+        </ul>
+        <div class="chips"><span>Python</span><span>Playwright</span><span>Claude Code</span><span>jsonschema</span><span>Telegram</span><span>pytest</span></div>
+      </div>
+    </article>
+
+    <!-- Asistencia -->
+    <article class="project reveal">
+      <div class="shots">
+        <div class="frame" data-gallery="asis" data-i="0">
+          <div class="bar"><i></i><i></i><i></i><small>asistenciaa.vercel.app</small></div>
+          <img src="assets/img/asistencia-home.webp" alt="App de asistencia" loading="lazy">
+        </div>
+        <div class="phone" data-gallery="asis" data-i="1"><img src="assets/img/asistencia-mobile.webp" alt="App de asistencia en móvil" loading="lazy"></div>
+      </div>
+      <div class="info">
+        <div class="top"><span class="badge live">En producción</span><span class="badge">2026 · Docencia</span></div>
+        <h3>Asistencia 2026</h3>
+        <p class="role">App para mis cursos del IES 6001 · Diseño y desarrollo</p>
+        <ul>
+          <li>Registro de asistencia con código temporal, participación y ranking de estudiantes.</li>
+          <li>Panel de administración y ruleta para dinámicas de clase.</li>
+          <li>Google Sheets como backend vía Apps Script: cero costo de infraestructura.</li>
+        </ul>
+        <div class="chips"><span>Next.js 15</span><span>React 19</span><span>Apps Script</span><span>Vercel</span></div>
+        <div class="plinks"><a href="https://asistenciaa.vercel.app/asistencia" target="_blank" rel="noopener">Ver app ↗</a><a href="https://github.com/ayrtondiaz/asistenciaa" target="_blank" rel="noopener">Código ↗</a></div>
+      </div>
+    </article>
+
+    <!-- TrabajAR -->
+    <article class="project reveal">
+      <div class="shots">
+        <div class="frame" data-gallery="trabajar" data-i="0">
+          <div class="bar"><i></i><i></i><i></i><small>trabajar — mockup</small></div>
+          <img src="assets/img/trabajar-desktop.webp" alt="TrabajAR en escritorio" loading="lazy">
+        </div>
+        <div class="phone" data-gallery="trabajar" data-i="2"><img src="assets/img/trabajar-tracking.webp" alt="Seguimiento del profesional en tiempo real" loading="lazy"></div>
+        <div class="thumbs">
+          <button data-gallery="trabajar" data-i="1"><img src="assets/img/trabajar-mobile.webp" alt="TrabajAR inicio móvil" loading="lazy"></button>
+        </div>
+      </div>
+      <div class="info">
+        <div class="top"><span class="badge">Concepto · Diseño</span><span class="badge">2026 · Propio</span></div>
+        <h3>TrabajAR</h3>
+        <p class="role">Plataforma para contratar oficios a domicilio · Producto, UX y arquitectura</p>
+        <ul>
+          <li>Flujo completo: pedido, asignación, seguimiento en vivo con PIN de seguridad y calificación.</li>
+          <li>Diseño mobile-first y versión web a partir del mismo sistema visual.</li>
+          <li>Arquitectura planificada: API en Go con PostGIS, web en React y app en React Native.</li>
+        </ul>
+        <div class="chips"><span>UX/UI</span><span>Go</span><span>PostGIS</span><span>React</span><span>React Native</span></div>
+        <div class="plinks"><a href="https://github.com/ayrtondiaz/trabajAR-mockup" target="_blank" rel="noopener">Ver mockup ↗</a></div>
+      </div>
+    </article>
+  </section>
+
+  <!-- OTROS TRABAJOS -->
+  <section id="otros">
+    <div class="sec-head">
+      <div><span class="label">02 — Más trabajo</span><h2>Otros proyectos</h2></div>
+      <p>Sitios para clientes, propuestas técnicas y proyectos creativos.</p>
+    </div>
+    <div class="grid">
+      <article class="card reveal">
+        <div class="img" data-gallery="esports" data-i="0"><img src="assets/img/esports-desktop.webp" alt="Sitio de Esports Arena" loading="lazy"></div>
+        <div class="body">
+          <div class="top"><span class="badge live">Online</span></div>
+          <h4>Esports Arena 2025</h4>
+          <p>Sitio del evento gamer más grande del norte argentino (Centro de Convenciones de Salta): cronograma, entradas, sponsors y noticias. También gestioné el proyecto del evento.</p>
+          <div class="chips"><span>HTML</span><span>Bootstrap 5</span><span>GSAP</span><span>Branding</span></div>
+          <div class="plinks"><a href="https://ayrtondiaz.github.io/EsportsArena2025/" target="_blank" rel="noopener">Ver sitio ↗</a><a href="https://github.com/ayrtondiaz/EsportsArena2025" target="_blank" rel="noopener">Código ↗</a></div>
+        </div>
+      </article>
+      <article class="card reveal">
+        <div class="img" data-gallery="inmo" data-i="0"><img src="assets/img/inmobiliaria-desktop.webp" alt="Sitio de Salta Propiedades" loading="lazy"></div>
+        <div class="body">
+          <div class="top"><span class="badge live">Online</span></div>
+          <h4>Salta Propiedades</h4>
+          <p>Sitio inmobiliario con catálogo, filtros y contacto directo por WhatsApp.</p>
+          <div class="chips"><span>Next.js</span><span>TypeScript</span><span>Tailwind</span></div>
+          <div class="plinks"><a href="https://inmobiliaria-rho.vercel.app" target="_blank" rel="noopener">Ver sitio ↗</a><a href="https://github.com/ayrtondiaz/inmobiliaria" target="_blank" rel="noopener">Código ↗</a></div>
+        </div>
+      </article>
+      <article class="card reveal">
+        <div class="img" data-gallery="pulpo" data-i="0"><img src="assets/img/pulpo-game.webp" alt="Juego Pulpo Cocinero" loading="lazy"></div>
+        <div class="body">
+          <div class="top"><span class="badge">Juego · Personal</span></div>
+          <h4>Pulpo Cocinero</h4>
+          <p>Juego 2D de cocina submarina con estética stop-motion, instalable como PWA y empaquetado para Android.</p>
+          <div class="chips"><span>Phaser 3</span><span>TypeScript</span><span>Vite</span><span>Capacitor</span></div>
+        </div>
+      </article>
+      <article class="card reveal">
+        <div class="img" data-gallery="vivamente" data-i="0"><img src="assets/img/vivamente-desktop.webp" alt="Sitio de Vivamente" loading="lazy"></div>
+        <div class="body">
+          <div class="top"><span class="badge live">Online</span></div>
+          <h4>Vivamente</h4>
+          <p>Sitio para una startup de triple impacto basada en economía circular: reciclaje, catálogo de productos y contacto, con Firebase como backend.</p>
+          <div class="chips"><span>HTML</span><span>JavaScript</span><span>Firebase</span></div>
+          <div class="plinks"><a href="https://vivamente-project.vercel.app" target="_blank" rel="noopener">Ver sitio ↗</a><a href="https://github.com/ayrtondiaz/Vivamente_Project" target="_blank" rel="noopener">Código ↗</a></div>
+        </div>
+      </article>
+      <article class="card textonly reveal" style="grid-column:1/-1">
+        <div class="img" style="aspect-ratio:auto;height:140px"><span>{ NotifyHub }</span></div>
+        <div class="body">
+          <div class="top"><span class="badge">Propuesta técnica · B2B</span></div>
+          <h4>NotifyHub</h4>
+          <p>Plataforma de notificaciones corporativas para una tabacalera: API, panel de campañas y plantillas, y app móvil con push. Arquitectura, presupuesto y demo funcional.</p>
+          <div class="chips"><span>NestJS</span><span>PostgreSQL</span><span>Redis</span><span>MongoDB</span><span>Novu</span><span>Docker</span></div>
+        </div>
+      </article>
+    </div>
+    <p style="margin-top:28px;text-align:center"><a class="btn" href="https://github.com/ayrtondiaz?tab=repositories" target="_blank" rel="noopener">Ver los +40 repositorios en GitHub ↗</a></p>
+  </section>
+
+  <!-- DISEÑO -->
+  <section id="diseno">
+    <div class="sec-head">
+      <div><span class="label">03 — Diseño</span><h2>Branding y diseño gráfico</h2></div>
+      <p>Identidades de marca de Stark Soft &amp; Design y sus clientes, piezas para redes y sitios para marcas de Salta. Photoshop, Illustrator y Premiere.</p>
+    </div>
+    <div class="bento reveal">
+      <figure class="contain" style="background:#0b0f14" data-gallery="design" data-i="-3"><img src="assets/img/stark-logo.webp" alt="Stark Soft &amp; Design — logotipo registrado" loading="lazy"><figcaption>Stark · marca propia</figcaption></figure>
+      <figure class="w2" data-gallery="design" data-i="-2"><img src="assets/img/brand-adl-concepts.webp" alt="Conceptos de marca y paletas para un importador de tecnología" loading="lazy"><figcaption>Stark · conceptos y paletas</figcaption></figure>
+      <figure data-gallery="design" data-i="-1"><img src="assets/img/brand-maverik.webp" alt="MAVERIK Importaciones — propuesta de marca" loading="lazy"><figcaption>Stark · propuesta Maverik</figcaption></figure>
+      <figure class="w2 h2" data-gallery="design" data-i="0"><img src="assets/img/brand-nexus-devices.webp" alt="Nexus Importados — aplicación de marca en dispositivos" loading="lazy"><figcaption>Nexus Importados</figcaption></figure>
+      <figure class="contain" data-gallery="design" data-i="1"><img src="assets/img/brand-nexus-logo.webp" alt="Nexus Importados — isotipo" loading="lazy"><figcaption>Nexus · isotipo</figcaption></figure>
+      <figure class="contain" data-gallery="design" data-i="2"><img src="assets/img/brand-bruma.webp" alt="BRUMA — logotipo" loading="lazy"><figcaption>BRUMA</figcaption></figure>
+      <figure class="w2" data-gallery="design" data-i="3"><img src="assets/img/brand-macarena-web.webp" alt="M&amp;E (Macarena) — sitio de la tienda" loading="lazy"><figcaption>M&amp;E · tienda online</figcaption></figure>
+      <figure class="w2" data-gallery="design" data-i="4"><img src="assets/img/brand-esports-banner.webp" alt="Esports Arena — banner para sponsors" loading="lazy"><figcaption>Esports Arena</figcaption></figure>
+      <figure class="contain" style="background:#111" data-gallery="design" data-i="5"><img src="assets/img/brand-macarena-logo.webp" alt="M&amp;E — isologo" loading="lazy"><figcaption>M&amp;E · isologo</figcaption></figure>
+      <figure data-gallery="design" data-i="6"><img src="assets/img/brand-recibida.webp" alt="Invitación de graduación" loading="lazy"><figcaption>Invitaciones</figcaption></figure>
+      <figure class="w2" data-gallery="design" data-i="7"><img src="assets/img/brand-merecibo.webp" alt="Piezas para evento de graduación" loading="lazy"><figcaption>Piezas para eventos</figcaption></figure>
+      <figure class="w2" data-gallery="design" data-i="8"><img src="assets/img/brand-macarena-about.webp" alt="M&amp;E — sección Quiénes somos" loading="lazy"><figcaption>M&amp;E · contenido</figcaption></figure>
+    </div>
+  </section>
+
+  <!-- EXPERIENCIA -->
+  <section id="experiencia">
+    <div class="sec-head">
+      <div><span class="label">04 — Trayectoria</span><h2>Experiencia</h2></div>
+    </div>
+    <div class="xp">
+      <div class="xp-item reveal"><time>2024 — Actual</time><div><h4>Fundador &amp; Arquitecto de Software <small>· Stark Soft &amp; Design</small></h4><p>Startup propia de desarrollo de software. Lidero producto, arquitectura y desarrollo de Stark IA (e-commerce + ERP) y de soluciones a medida para clientes como Nexus Importados.</p></div></div>
+      <div class="xp-item reveal"><time>2026 — Actual</time><div><h4>Odoo Developer &amp; UX/UI Designer <small>· Consejo Profesional de Ciencias Económicas de Salta</small></h4><p>Migración del sitio institucional de WordPress a Odoo 19, generadores en Python con publicación vía XML-RPC, componentes editables sin código y piezas gráficas.</p></div></div>
+      <div class="xp-item reveal"><time>Mar 2026 — Actual</time><div><h4>Profesor de Educación Superior <small>· IES 6001 Gral. Manuel Belgrano</small></h4><p>Programación II y Prácticas Profesionalizantes II en la Tecnicatura Superior en Análisis de Sistemas y Desarrollo de Software.</p></div></div>
+      <div class="xp-item reveal"><time>2024 — Actual</time><div><h4>Supervisor Técnico TI <small>· CECAITRA</small></h4><p>Gestión, documentación y carga de datos de infracciones de tránsito de la provincia. Automatización de tareas y reportes con Python y Google Sheets; coordinación con organismos públicos. Antes, técnico de mantenimiento de equipos y redes (MikroTik).</p></div></div>
+      <div class="xp-item reveal"><time>2023 — 2025</time><div><h4>Gestor de Proyecto <small>· Esports Arena / Infernales</small></h4><p>Planificación, riesgos, recursos humanos y logística de un evento de deportes electrónicos en el Centro de Convenciones de Salta, además del sitio web.</p></div></div>
+      <div class="xp-item reveal"><time>2023</time><div><h4>Auditor Interno TI <small>· UCASAL — Tribunal Electoral</small></h4><p>Auditoría del sistema de voto electrónico en las elecciones provinciales, con consultas en PostgreSQL y visualización en tiempo real.</p></div></div>
+      <div class="xp-item reveal"><time>2020 — Actual</time><div><h4>Desarrollo web y diseño freelance <small>· infis{}</small></h4><p>Más de 20 sitios web, tiendas online, identidades de marca y campañas digitales para clientes de Salta: landings para estudios contables (DHK Consultoría), sitios inmobiliarios y médicos, branding y community management con influencers locales.</p></div></div>
+      <div class="xp-item reveal"><time>2019 — 2020</time><div><h4>Servicio técnico y emprendimiento <small>· Independiente</small></h4><p>Reparación, mantenimiento y armado de PCs a domicilio, y un emprendimiento de venta y promoción de videojuegos: mi primera experiencia combinando técnica y marketing.</p></div></div>
+    </div>
+  </section>
+
+  <!-- STACK -->
+  <section id="stack">
+    <div class="sec-head">
+      <div><span class="label">05 — Herramientas</span><h2>Stack</h2></div>
+    </div>
+    <div class="cols">
+      <div><h5>Frontend</h5><div class="chips"><span>Next.js</span><span>React</span><span>TypeScript</span><span>Tailwind</span><span>Vite</span><span>Redux</span></div></div>
+      <div><h5>Backend &amp; datos</h5><div class="chips"><span>NestJS</span><span>Node</span><span>PostgreSQL</span><span>MongoDB</span><span>Prisma</span><span>Drizzle</span><span>Odoo 19</span></div></div>
+      <div><h5>IA &amp; automatización</h5><div class="chips"><span>Claude Code</span><span>MCP</span><span>Playwright</span><span>n8n</span><span>Python</span></div></div>
+      <div><h5>Data analytics</h5><div class="chips"><span>Power BI</span><span>DAX</span><span>Pandas</span><span>ETL</span><span>DuckDB</span><span>Series temporales</span></div></div>
+      <div><h5>DevOps</h5><div class="chips"><span>Docker</span><span>Git</span><span>Vercel</span><span>Dokploy</span><span>Caddy</span></div></div>
+      <div><h5>Diseño &amp; gestión</h5><div class="chips"><span>Photoshop</span><span>Illustrator</span><span>Scrum</span><span>Jira</span></div></div>
+    </div>
+  </section>
+
+  <!-- FORMACIÓN -->
+  <section id="formacion">
+    <div class="sec-head">
+      <div><span class="label">06 — Formación</span><h2>Educación y certificaciones</h2></div>
+    </div>
+    <div class="edu">
+      <ul>
+        <li>Ingeniería en Informática — UCASAL <span>2020–2025</span></li>
+        <li>Técnico en Informática — UCASAL <span>2025</span></li>
+        <li>Bachiller en Economía y Administración <span>2016</span></li>
+      </ul>
+      <ul>
+        <li>Claude Code + Programación con IA — Udemy <span>2026</span></li>
+        <li>Series Temporales con R y Python — Udemy <span>2026</span></li>
+        <li>n8n + MCP — DevTalles <span>2025</span></li>
+        <li>Data Analytics · Backend · React — Coderhouse <span>2022–23</span></li>
+        <li>Desarrollo Fullstack — Fundación Movistar <span>2022</span></li>
+        <li>Diseño Gráfico y Marketing Digital — Instituto NOA <span>2020–21</span></li>
+      </ul>
+    </div>
+    <blockquote class="reveal">“Avalo y reconozco al alumno Ayrton Sergio Díaz por su destacada trayectoria académica y su participación activa durante todo el proceso académico en la carrera de Ingeniería Informática.”
+      <cite>Mg. Ing. Guillermina Rosana Nievas — Decana, UCASAL · Reconocimiento académico, 2025</cite>
+    </blockquote>
+  </section>
+
+  <!-- CONTACTO -->
+  <section class="contact" id="contacto">
+    <span class="label">07 — Contacto</span>
+    <h2>¿Trabajamos juntos?</h2>
+    <p>Busco posiciones fullstack o de automatización con IA, remotas o híbridas en Salta. También tomo proyectos freelance.</p>
+    <div class="cta">
+      <a class="btn primary" href="mailto:ayrtondiazsalta@hotmail.com">ayrtondiazsalta@hotmail.com</a>
+      <a class="btn" href="https://wa.me/543874864867" target="_blank" rel="noopener">WhatsApp ↗</a>
+      <a class="btn" href="https://www.linkedin.com/in/ayrton-diaz-1437b329b" target="_blank" rel="noopener">LinkedIn ↗</a>
+    </div>
+  </section>
+</main>
+
+<footer class="wrap">© 2026 Ayrton Diaz · Salta, Argentina</footer>
+
+<dialog id="lb">
+  <img id="lb-img" alt="">
+  <div class="lb-bar"><span id="lb-cap"></span><span><button id="lb-prev" aria-label="Anterior">←</button> <button id="lb-next" aria-label="Siguiente">→</button> <button id="lb-close" aria-label="Cerrar">✕</button></span></div>
+</dialog>
+
+<script>
+const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const finePointer = matchMedia('(pointer: fine)').matches;
+
+// tech marquee (devicon CDN, pinned version)
+(() => {
+  const D = 'https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/';
+  const techs = [
+    ['Next.js', 'nextjs/nextjs-original.svg', true], ['React', 'react/react-original.svg'], ['TypeScript', 'typescript/typescript-original.svg'],
+    ['NestJS', 'nestjs/nestjs-original.svg'], ['Node.js', 'nodejs/nodejs-original.svg'], ['PostgreSQL', 'postgresql/postgresql-original.svg'],
+    ['Python', 'python/python-original.svg'], ['Docker', 'docker/docker-original.svg'], ['Tailwind', 'tailwindcss/tailwindcss-original.svg'],
+    ['Prisma', 'prisma/prisma-original.svg', true], ['MongoDB', 'mongodb/mongodb-original.svg'], ['Redis', 'redis/redis-original.svg'],
+    ['Playwright', 'playwright/playwright-original.svg'], ['Vite', 'vitejs/vitejs-original.svg'], ['Git', 'git/git-original.svg'],
+    ['Go', 'go/go-original.svg'], ['Claude Code'], ['MCP'], ['Odoo 19'], ['n8n'], ['Power BI'],
+  ];
+  const html = techs.map(([n, p, inv]) =>
+    `<span class="tech">${p ? `<img src="${D + p}" alt="" loading="lazy" ${inv ? 'class="inv"' : ''} onerror="this.remove()">` : '<b style="color:var(--c1)">◆</b>'}${n}</span>`).join('');
+  document.getElementById('track').innerHTML = html + html;
+})();
+
+// rotating role (typewriter)
+(() => {
+  const el = document.getElementById('role');
+  const roles = ['Desarrollador Fullstack', 'Fundador de Stark Soft & Design', 'AI-Native Developer', 'Odoo Developer', 'Docente de Programación'];
+  if (reduced) return;
+  let r = 0, i = roles[0].length, del = true;
+  const tick = () => {
+    const word = roles[r];
+    i += del ? -1 : 1;
+    el.textContent = word.slice(0, i);
+    let wait = del ? 35 : 65;
+    if (!del && i === word.length) { del = true; wait = 2200; }
+    else if (del && i === 0) { del = false; r = (r + 1) % roles.length; wait = 300; }
+    setTimeout(tick, wait);
+  };
+  setTimeout(tick, 2200);
+})();
+
+// particle network in hero
+(() => {
+  const c = document.getElementById('net');
+  if (reduced || !c) return;
+  const ctx = c.getContext('2d');
+  let w, h, pts = [], mouse = { x: -9999, y: -9999 }, running = true;
+  const resize = () => {
+    const dpr = Math.min(devicePixelRatio || 1, 2);
+    w = c.clientWidth; h = c.clientHeight;
+    c.width = w * dpr; c.height = h * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    const n = Math.min(90, Math.floor(w * h / 15000));
+    pts = Array.from({ length: n }, () => ({ x: Math.random() * w, y: Math.random() * h, vx: (Math.random() - .5) * .35, vy: (Math.random() - .5) * .35 }));
+  };
+  const frame = () => {
+    if (!running) return;
+    ctx.clearRect(0, 0, w, h);
+    for (const p of pts) {
+      p.x += p.vx; p.y += p.vy;
+      if (p.x < 0 || p.x > w) p.vx *= -1;
+      if (p.y < 0 || p.y > h) p.vy *= -1;
+      const dx = mouse.x - p.x, dy = mouse.y - p.y, d = Math.hypot(dx, dy);
+      if (d < 160) { p.x -= dx * .004; p.y -= dy * .004; }
+    }
+    for (let i = 0; i < pts.length; i++) {
+      const a = pts[i];
+      for (let j = i + 1; j < pts.length; j++) {
+        const b = pts[j], d = Math.hypot(a.x - b.x, a.y - b.y);
+        if (d < 130) { ctx.strokeStyle = `rgba(34,211,238,${(1 - d / 130) * .22})`; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke(); }
+      }
+      const md = Math.hypot(a.x - mouse.x, a.y - mouse.y);
+      if (md < 180) { ctx.strokeStyle = `rgba(52,211,153,${(1 - md / 180) * .45})`; ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(mouse.x, mouse.y); ctx.stroke(); }
+      ctx.fillStyle = 'rgba(148,233,255,.7)'; ctx.beginPath(); ctx.arc(a.x, a.y, 1.4, 0, Math.PI * 2); ctx.fill();
+    }
+    requestAnimationFrame(frame);
+  };
+  addEventListener('resize', resize);
+  addEventListener('mousemove', e => { mouse.x = e.clientX; mouse.y = e.clientY + scrollY; });
+  new IntersectionObserver(([e]) => { const was = running; running = e.isIntersecting; if (running && !was) frame(); }).observe(c);
+  resize(); frame();
+})();
+
+// cursor glow + scroll progress
+(() => {
+  const g = document.getElementById('glow'), bar = document.getElementById('progress');
+  if (finePointer && !reduced) addEventListener('mousemove', e => { g.style.opacity = 1; g.style.transform = `translate(${e.clientX - 260}px,${e.clientY - 260}px)`; });
+  const onScroll = () => { const max = document.documentElement.scrollHeight - innerHeight; bar.style.transform = `scaleX(${max > 0 ? scrollY / max : 0})`; };
+  addEventListener('scroll', onScroll, { passive: true }); onScroll();
+})();
+
+// spotlight + 3D tilt
+(() => {
+  if (!finePointer || reduced) return;
+  document.querySelectorAll('.card,.frame').forEach(el => {
+    el.addEventListener('mousemove', e => {
+      const r = el.getBoundingClientRect(), x = e.clientX - r.left, y = e.clientY - r.top;
+      el.style.setProperty('--mx', x + 'px'); el.style.setProperty('--my', y + 'px');
+      if (el.classList.contains('frame')) el.style.transform = `rotateY(${(x / r.width - .5) * 6}deg) rotateX(${(.5 - y / r.height) * 6}deg)`;
+    });
+    el.addEventListener('mouseleave', () => { el.style.transform = ''; });
+  });
+})();
+
+// scramble section titles when they enter the viewport
+(() => {
+  if (reduced) return;
+  const chars = '!<>-_\\/[]{}—=+*^?#01';
+  const scramble = el => {
+    const final = el.textContent; let f = 0; const total = 22;
+    const run = () => {
+      el.textContent = [...final].map((ch, i) => ch === ' ' ? ' ' : i < (f / total) * final.length ? ch : chars[Math.random() * chars.length | 0]).join('');
+      if (f++ < total) requestAnimationFrame(run); else el.textContent = final;
+    };
+    run();
+  };
+  const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { scramble(e.target); io.unobserve(e.target); } }), { threshold: .6 });
+  document.querySelectorAll('.sec-head h2').forEach(h => io.observe(h));
+})();
+
+// animated counters
+(() => {
+  const io = new IntersectionObserver(es => es.forEach(e => {
+    if (!e.isIntersecting) return; io.unobserve(e.target);
+    const m = e.target.textContent.match(/^(\d+)(.*)$/); if (!m || reduced) return;
+    const end = +m[1], suf = m[2], start = end > 1000 ? end - 40 : 0, t0 = performance.now(), dur = 1400;
+    const step = t => { const k = Math.min(1, (t - t0) / dur), v = Math.round(start + (end - start) * (1 - Math.pow(1 - k, 3))); e.target.textContent = v + suf; if (k < 1) requestAnimationFrame(step); };
+    requestAnimationFrame(step);
+  }), { threshold: .8 });
+  document.querySelectorAll('.stats b').forEach(b => io.observe(b));
+})();
+
+// terminal types itself line by line
+(() => {
+  const pre = document.getElementById('term'); if (!pre || reduced) return;
+  const lines = pre.innerHTML.split('\n'); pre.innerHTML = '';
+  const io = new IntersectionObserver(([e]) => {
+    if (!e.isIntersecting) return; io.disconnect(); pre.classList.add('typing');
+    let i = 0;
+    const next = () => { if (i >= lines.length) { pre.classList.remove('typing'); return; } pre.innerHTML += lines[i++] + (i < lines.length ? '\n' : ''); setTimeout(next, lines[i - 1].trim() ? 380 : 120); };
+    next();
+  }, { threshold: .5 });
+  io.observe(pre);
+})();
+
+// active nav link
+(() => {
+  const links = [...document.querySelectorAll('.links a[href^="#"]')];
+  const io = new IntersectionObserver(es => es.forEach(e => {
+    if (e.isIntersecting) links.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + e.target.id));
+  }), { rootMargin: '-45% 0px -50% 0px' });
+  document.querySelectorAll('section[id]').forEach(s => io.observe(s));
+})();
+
+// lightbox: groups images by data-gallery, ordered by data-i
+(() => {
+  const lb = document.getElementById('lb'), img = document.getElementById('lb-img'), cap = document.getElementById('lb-cap');
+  const triggers = [...document.querySelectorAll('[data-gallery]')];
+  let set = [], idx = 0;
+  const show = () => { const el = set[idx].querySelector('img'); img.src = el.src; img.alt = el.alt; cap.textContent = `${el.alt} · ${idx + 1}/${set.length}`; };
+  triggers.forEach(t => t.addEventListener('click', () => {
+    set = triggers.filter(x => x.dataset.gallery === t.dataset.gallery).sort((a, b) => a.dataset.i - b.dataset.i);
+    idx = set.indexOf(t); show(); lb.showModal();
+  }));
+  const step = d => { idx = (idx + d + set.length) % set.length; show(); };
+  document.getElementById('lb-prev').onclick = () => step(-1);
+  document.getElementById('lb-next').onclick = () => step(1);
+  document.getElementById('lb-close').onclick = () => lb.close();
+  lb.addEventListener('click', e => { if (e.target === lb) lb.close(); });
+  addEventListener('keydown', e => { if (!lb.open) return; if (e.key === 'ArrowRight') step(1); if (e.key === 'ArrowLeft') step(-1); });
+})();
+
+// staggered reveal on scroll
+(() => {
+  const io = new IntersectionObserver(es => es.forEach(e => {
+    if (!e.isIntersecting) return;
+    const sibs = [...e.target.parentElement.children].filter(c => c.classList.contains('reveal'));
+    e.target.style.transitionDelay = (Math.max(0, sibs.indexOf(e.target)) % 4) * 90 + 'ms';
+    e.target.classList.add('in'); io.unobserve(e.target);
+  }), { threshold: .12 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+})();
+</script>
+</body>
+</html>
