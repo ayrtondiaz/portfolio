@@ -241,6 +241,42 @@ dialog button:hover{border-color:var(--c1)}
   .reveal{opacity:1;transform:none;filter:none}
   #net,#glow{display:none}
 }
+/* proyecto de grado */
+.thesis{position:relative;border-radius:20px;padding:clamp(20px,4vw,40px);background:linear-gradient(var(--surface),var(--surface)) padding-box,linear-gradient(135deg,var(--c1),var(--c3) 45%,var(--c2)) border-box;border:1px solid transparent;box-shadow:0 0 60px -20px rgba(34,211,238,.35);overflow:hidden}
+.thesis::before{content:"";position:absolute;inset:0;background:radial-gradient(600px 240px at 85% 0%,rgba(129,140,248,.12),transparent 70%);pointer-events:none}
+.thesis>*{position:relative}
+.thesis-head{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap;align-items:flex-end}
+.thesis-head .top{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+.thesis h3{font-size:clamp(22px,3vw,30px);letter-spacing:-.02em;margin:0 0 6px}
+.thesis .role{color:var(--muted);margin:0}
+.thesis-kpis{display:flex;gap:10px;flex-wrap:wrap}
+.thesis-kpis div{padding:10px 14px;border:1px solid var(--line);border-radius:10px;background:var(--bg2);min-width:120px}
+.thesis-kpis b{display:block;font:600 16px/1.2 "JetBrains Mono",monospace;color:var(--c1)}
+.thesis-kpis small{color:var(--muted);font-size:12px}
+.spark{margin:28px 0;border:1px solid var(--line);border-radius:14px;background:var(--bg2);padding:14px 16px 10px}
+.spark figcaption{display:flex;gap:16px;flex-wrap:wrap;align-items:center;font:500 12px "JetBrains Mono",monospace;color:var(--muted);margin-bottom:8px}
+.spark figcaption small{margin-left:auto}
+.spark .dot{display:inline-block;width:10px;height:3px;border-radius:2px;margin-right:6px;vertical-align:middle;background:var(--c1)}
+.spark .dot.pred{background:repeating-linear-gradient(90deg,var(--c2) 0 3px,transparent 3px 5px)}
+.spark svg{display:block;width:100%;height:clamp(120px,18vw,190px);overflow:visible}
+.spark .grid-lines line{stroke:var(--line);stroke-width:1;vector-effect:non-scaling-stroke}
+.spark .grid-lines .split{stroke:rgba(52,211,153,.35);stroke-dasharray:3 4}
+.spark .area{fill:url(#sparkfill)}
+.spark .wipe{transform:scaleX(0);transform-origin:0 0;transition:transform 1.8s cubic-bezier(.6,0,.2,1)}
+.spark .real{fill:none;stroke:var(--c1);stroke-width:2.5;vector-effect:non-scaling-stroke;stroke-linejoin:round}
+.spark .pred{fill:none;stroke:var(--c2);stroke-width:2.5;vector-effect:non-scaling-stroke;stroke-dasharray:6 5;opacity:0;transition:opacity .6s 1.8s}
+.spark .now{fill:var(--c2);opacity:0;transition:opacity .4s 1.7s;transform-box:fill-box;transform-origin:center}
+.thesis.in .spark .wipe{transform:none}
+.thesis.in .spark .pred,.thesis.in .spark .now{opacity:1}
+.thesis.in .spark .now{animation:pulse 2s 2.2s ease-in-out infinite}
+@keyframes pulse{50%{transform:scale(1.8);opacity:.5}}
+.thesis-body{display:grid;grid-template-columns:1fr 1.1fr;gap:clamp(20px,4vw,40px);align-items:start}
+.thesis-body ul{margin:0 0 18px;padding-left:18px}
+.thesis-body li{margin-bottom:10px;color:#c5cfdf}
+.thesis-shots .thumbs{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:10px}
+.thesis-shots .thumbs button{height:auto;aspect-ratio:16/10}
+@media (max-width:860px){.thesis-body{grid-template-columns:1fr}.spark figcaption small{margin-left:0}}
+@media (prefers-reduced-motion:reduce){.spark .wipe{transform:none;transition:none}.spark .pred,.spark .now{opacity:1;transition:none}.thesis.in .spark .now{animation:none}}
 </style>
 </head>
 <body>
@@ -254,6 +290,7 @@ dialog button:hover{border-color:var(--c1)}
     <a class="brand" href="#top">ayrton<span>.</span>diaz</a>
     <div class="links">
       <a href="#proyectos">Proyectos</a>
+      <a href="#grado">Tesis</a>
       <a href="#diseno">Diseño</a>
       <a href="#experiencia">Experiencia</a>
       <a href="#stack">Stack</a>
@@ -490,10 +527,69 @@ dialog button:hover{border-color:var(--c1)}
     </article>
   </section>
 
+  <!-- PROYECTO DE GRADO -->
+  <section id="grado">
+    <div class="sec-head">
+      <div><span class="label">02 — Proyecto de grado</span><h2>Ingeniería Informática · UCASAL</h2></div>
+      <p>El proyecto final con el que cerré la carrera: series temporales, modelos predictivos y una app web que los pone en producción.</p>
+    </div>
+
+    <article class="thesis reveal">
+      <div class="thesis-head">
+        <div>
+          <div class="top"><span class="badge live">Online</span><span class="badge">Proyecto de grado · 2025</span></div>
+          <h3>FORECASTING <span class="grad">— Pronóstico del dólar argentino</span></h3>
+          <p class="role">Ciencia de datos aplicada · Investigación, modelado y desarrollo web</p>
+        </div>
+        <div class="thesis-kpis">
+          <div><b>2016–2025</b><small>serie mensual</small></div>
+          <div><b>10</b><small>series monetarias y cambiarias</small></div>
+          <div><b>5 meses</b><small>de horizonte de pronóstico</small></div>
+        </div>
+      </div>
+
+      <figure class="spark" aria-label="Dólar blue: datos reales de noviembre de 2022 a octubre de 2025 y pronóstico a marzo de 2026">
+        <figcaption><span><i class="dot real"></i>Dólar blue real</span><span><i class="dot pred"></i>Pronóstico del modelo</span><small>nov 2022 → mar 2026 · $314 → $1.975</small></figcaption>
+        <svg viewBox="0 0 600 180" preserveAspectRatio="none" role="img">
+          <defs><clipPath id="sparkclip"><rect class="wipe" x="0" y="0" width="520" height="180"/></clipPath><linearGradient id="sparkfill" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#22d3ee" stop-opacity=".22"/><stop offset="1" stop-color="#22d3ee" stop-opacity="0"/></linearGradient></defs>
+          <g class="grid-lines"><line x1="0" y1="45" x2="600" y2="45"/><line x1="0" y1="90" x2="600" y2="90"/><line x1="0" y1="135" x2="600" y2="135"/><line x1="517.5" y1="0" x2="517.5" y2="180" class="split"/></g>
+          <g clip-path="url(#sparkclip)"><path class="area" d="M10.0,170.0 L24.5,166.9 L39.0,163.5 L53.5,164.1 L68.0,162.2 L82.5,155.1 L97.0,153.1 L111.5,152.7 L126.0,147.3 L140.5,129.5 L155.0,123.2 L169.5,111.6 L184.0,113.1 L198.5,101.5 L213.0,85.2 L227.5,101.0 L242.0,103.0 L256.5,100.1 L271.0,82.3 L285.5,68.8 L300.0,68.3 L314.5,74.6 L329.0,81.3 L343.5,85.6 L358.0,92.4 L372.5,81.8 L387.0,82.7 L401.5,81.8 L416.0,72.6 L430.5,86.1 L445.0,86.6 L459.5,83.2 L474.0,71.7 L488.5,73.1 L503.0,61.1 L517.5,61.1 L517.5,180 L10,180 Z"/>
+          <path class="real" d="M10.0,170.0 L24.5,166.9 L39.0,163.5 L53.5,164.1 L68.0,162.2 L82.5,155.1 L97.0,153.1 L111.5,152.7 L126.0,147.3 L140.5,129.5 L155.0,123.2 L169.5,111.6 L184.0,113.1 L198.5,101.5 L213.0,85.2 L227.5,101.0 L242.0,103.0 L256.5,100.1 L271.0,82.3 L285.5,68.8 L300.0,68.3 L314.5,74.6 L329.0,81.3 L343.5,85.6 L358.0,92.4 L372.5,81.8 L387.0,82.7 L401.5,81.8 L416.0,72.6 L430.5,86.1 L445.0,86.6 L459.5,83.2 L474.0,71.7 L488.5,73.1 L503.0,61.1 L517.5,61.1"/>
+          </g>
+          <path class="pred" d="M517.5,61.1 L532.0,38.2 L546.5,28.0 L561.0,22.8 L575.5,18.1 L590.0,10.0"/>
+          <circle class="now" cx="517.5" cy="61.1" r="4"/>
+        </svg>
+      </figure>
+
+      <div class="thesis-body">
+        <div>
+          <ul>
+            <li>Construí un dataset propio de 2016 a 2025 con cotizaciones del dólar oficial y blue, inflación, base monetaria, circulante, depósitos y tasas (LELIQ, LEBAC). Es público en GitHub.</li>
+            <li>Entrené modelos de series temporales que pronostican mes a mes el dólar oficial y el blue; las predicciones se publican como CSV versionado.</li>
+            <li>Desarrollé la app web: cotizaciones en vivo desde DolarAPI (actualización por minuto), gráficos interactivos de real vs. pronóstico y tarjetas con la variación mensual proyectada.</li>
+          </ul>
+          <div class="chips"><span>Series temporales</span><span>Modelos predictivos</span><span>Next.js</span><span>TypeScript</span><span>Recharts</span><span>shadcn/ui</span><span>DolarAPI</span><span>Vercel</span></div>
+          <div class="plinks"><a href="https://forecast-ten-gamma.vercel.app" target="_blank" rel="noopener">Ver app ↗</a><a href="https://github.com/ayrtondiaz/dataset_ar" target="_blank" rel="noopener">Dataset ↗</a></div>
+        </div>
+        <div class="thesis-shots">
+          <div class="frame" data-gallery="grado" data-i="0">
+            <div class="bar"><i></i><i></i><i></i><small>forecast-ten-gamma.vercel.app</small></div>
+            <img src="assets/img/forecast-home.webp" alt="FORECASTING: cotizaciones actuales del dólar" loading="lazy">
+          </div>
+          <div class="thumbs">
+            <button data-gallery="grado" data-i="1"><img src="assets/img/forecast-charts.webp" alt="Gráficos de dólar real vs. pronóstico" loading="lazy"></button>
+            <button data-gallery="grado" data-i="2"><img src="assets/img/forecast-cards.webp" alt="Pronósticos de los próximos 5 meses" loading="lazy"></button>
+            <button data-gallery="grado" data-i="3"><img src="assets/img/forecast-mobile.webp" alt="FORECASTING en móvil" loading="lazy"></button>
+          </div>
+        </div>
+      </div>
+    </article>
+  </section>
+
   <!-- OTROS TRABAJOS -->
   <section id="otros">
     <div class="sec-head">
-      <div><span class="label">02 — Más trabajo</span><h2>Otros proyectos</h2></div>
+      <div><span class="label">03 — Más trabajo</span><h2>Otros proyectos</h2></div>
       <p>Sitios para clientes, propuestas técnicas y proyectos creativos.</p>
     </div>
     <div class="grid">
@@ -572,7 +668,7 @@ dialog button:hover{border-color:var(--c1)}
   <!-- DISEÑO -->
   <section id="diseno">
     <div class="sec-head">
-      <div><span class="label">03 — Diseño</span><h2>Branding y diseño gráfico</h2></div>
+      <div><span class="label">04 — Diseño</span><h2>Branding y diseño gráfico</h2></div>
       <p>Identidades de marca de Stark Soft &amp; Design y sus clientes, piezas para redes y sitios para marcas de Salta. Photoshop, Illustrator y Premiere.</p>
     </div>
     <div class="bento reveal">
@@ -594,7 +690,7 @@ dialog button:hover{border-color:var(--c1)}
   <!-- EXPERIENCIA -->
   <section id="experiencia">
     <div class="sec-head">
-      <div><span class="label">04 — Trayectoria</span><h2>Experiencia</h2></div>
+      <div><span class="label">05 — Trayectoria</span><h2>Experiencia</h2></div>
     </div>
     <div class="xp">
       <div class="xp-item reveal"><time>2024 — Actual</time><div><h4>Fundador &amp; Arquitecto de Software <small>· Stark Soft &amp; Design</small></h4><p>Startup propia de desarrollo de software. Lidero producto, arquitectura y desarrollo de Stark IA (e-commerce + ERP) y de soluciones a medida para clientes como Nexus Importados.</p></div></div>
@@ -611,7 +707,7 @@ dialog button:hover{border-color:var(--c1)}
   <!-- STACK -->
   <section id="stack">
     <div class="sec-head">
-      <div><span class="label">05 — Herramientas</span><h2>Stack</h2></div>
+      <div><span class="label">06 — Herramientas</span><h2>Stack</h2></div>
     </div>
     <div class="cols">
       <div><h5>Frontend</h5><div class="chips"><span>Next.js</span><span>React</span><span>TypeScript</span><span>Tailwind</span><span>Vite</span><span>Redux</span></div></div>
@@ -626,7 +722,7 @@ dialog button:hover{border-color:var(--c1)}
   <!-- FORMACIÓN -->
   <section id="formacion">
     <div class="sec-head">
-      <div><span class="label">06 — Formación</span><h2>Educación y certificaciones</h2></div>
+      <div><span class="label">07 — Formación</span><h2>Educación y certificaciones</h2></div>
     </div>
     <div class="edu">
       <ul>
@@ -650,7 +746,7 @@ dialog button:hover{border-color:var(--c1)}
 
   <!-- CONTACTO -->
   <section class="contact" id="contacto">
-    <span class="label">07 — Contacto</span>
+    <span class="label">08 — Contacto</span>
     <h2>¿Trabajamos juntos?</h2>
     <p>Busco posiciones fullstack o de automatización con IA, remotas o híbridas en Salta. También tomo proyectos freelance.</p>
     <div class="cta">
