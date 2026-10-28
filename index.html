@@ -28,6 +28,8 @@ body{background:var(--bg);color:var(--text);font:16px/1.65 Inter,system-ui,sans-
 ::selection{background:var(--c1);color:#001018}
 img{display:block;max-width:100%}
 a{color:inherit}
+.lead a{text-decoration:underline;text-decoration-color:rgba(52,211,153,.5);text-underline-offset:4px;transition:text-decoration-color .2s}
+.lead a:hover{text-decoration-color:var(--c2)}
 .wrap{max-width:1120px;margin:0 auto;padding:0 24px;position:relative;z-index:2}
 .label{font:500 12px/1.4 "JetBrains Mono",monospace;letter-spacing:.08em;text-transform:uppercase;color:var(--c1)}
 strong{color:var(--text);font-weight:600}
